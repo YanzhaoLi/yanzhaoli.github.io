@@ -34,7 +34,7 @@ description: I am Yanzhao Li.  I completed my bachelor's degree in Faculty of Sc
 
 </section>
 
-<section class="inner">
+<!-- <section class="inner">
   <div class="post-recents-in-index">
     <strong>Recent blog posts</strong>
   </div>
@@ -45,7 +45,7 @@ description: I am Yanzhao Li.  I completed my bachelor's degree in Faculty of Sc
       <small class="post-list-date-in-index">
       {% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
 
-      <!-- Whitespace added for readability -->
+      
       {% assign d = post.date | date: "%d" %}
       {% assign m = post.date | date: "%B" %}
 
@@ -55,20 +55,21 @@ description: I am Yanzhao Li.  I completed my bachelor's degree in Faculty of Sc
       {% else %}{{ post.date | date: "%b" }}
       {% endcase %}
       {% case d %}
-      {% when '01' or '21' or '31' %}{{ %d }}<!--st-->
-      {% when '02' or '22' %}{{ %d }}<!--nd-->
-      {% when '03' or '23' %}{{ %d }}<!--rd-->
-      {% else %}{{ %d }}<!--th-->
+      {% when '01' or '21' or '31' %}{{ %d }}
+      {% when '02' or '22' %}{{ %d }}nd
+      {% when '03' or '23' %}{{ %d }}rd
+      {% else %}{{ %d }}
       {% endcase %},
       {{ post.date | date: "%Y" }}</small><a  href="{{ site.url }}{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
       </li>
       {% endfor %}
     </ul>
-  </blockquote>
+  </blockquote> 
   <p>
     Here's my <a href="{{ site.url }}/yanzhaoli_en.pdf"><strong>resume</strong></a>,
-    <!-- and <a href="/contact"><strong>contact me</strong></a>.</small> -->
+    and <a href="/contact"><strong>contact me</strong></a>.</small>
   </p>
 </section>
-
+ -->
+ 
 <a href="https://github.com/YanzhaoLi/yanzhaoli.github.io"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
