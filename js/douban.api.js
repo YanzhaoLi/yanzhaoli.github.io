@@ -1,7 +1,7 @@
 function DoubanApi() {
 	this.defaults = {
 		place:"douban",
-		user:"57528320",
+		user:"63140059",
 		api:"08242004429e34bb186c600cc7da9e31",
 		book:[{status:"reading",maxnum:20},{status:"read",maxnum:100},{status:"wish",maxnum:100}],
 		bookreadingtitle:"在读...",
