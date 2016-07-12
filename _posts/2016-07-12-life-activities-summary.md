@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 2016 Life
-categories: [movie]
-tags: movie
+title: Life2016
+categories: [life]
+tags: life
 ---
 
 ## 2016
@@ -12,21 +12,22 @@ tags: movie
 	+ 7.12，北展剧场
 + 
 ## Previously
-+《三傻大闹宝莱坞》
+
++ 《三傻大闹宝莱坞》
 李朝勇推荐；张影推荐
 学霸再怎么努力也是无法跟神斗的
-+《我们俩》
++ 《我们俩》
 cctv6看到的； 
 15岁小女孩租一个老太太的房子，孤独老人脾气不好，两人之间经历了很多；
 感情很真，很伤感，我很喜欢
-+《怦然心动》
++ 《怦然心动》
 看推荐电影看到的；洪佳琪推荐
 讲述小孩子的甜美感情；很美很纯；
-+《肖申克的救赎》
++ 《肖申克的救赎》
 男生必看；励志经典；剧情很棒；考研期间一不学习就看看
 hope is a good thing, maybe the best thing in the world. And no good thing ever dies
 some birds are not meant to be caged. Because their feathers are too bright
-+《阿甘正传》
++ 《阿甘正传》
 同上；剧情很棒；爱情也美；
 + 《中国合伙人》
 讲述俞敏洪的故事；挺励志；但心态有问题，适合屌丝看（成功后见到甩掉自己的前女友的场景；成功后捐钱给曾经抛弃自己的实验室）
