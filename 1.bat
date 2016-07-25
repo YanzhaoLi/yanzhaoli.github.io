@@ -1,8 +1,5 @@
 @echo off  
-  
-rem 输出当前工作目录  
-echo %cd%  
-  
+    
 rem 设置当前目录   
 set current_dir=E:\JS\yanzhaoli.github.io
   
@@ -16,11 +13,14 @@ popd
 git status  
 pause
 
+echo "git add *"
 git add *
 pause
 
+echo "git commit -m update *"
 git commit -m "update" *
 pause
 
+echo "git push origin master"
 git push origin master
 pause
