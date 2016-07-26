@@ -19,4 +19,8 @@ tags: toMaster
 1. [The Architecture of Open Source Applications](http://aosabook.org/en/index.html)
 
 ## JS
-1. [React Websites with Source Code](https://react.rocks/tag/FullStack)
+1. [Prepare Well for your FrontEnd Interview](http://www.1point3acres.com/bbs/thread-104335-1-1.html)
+	+ 超详细的面试准备
+	+ 充足的学习资料链接
+	+ 常见问题的常见答案
+2. [React Websites with Source Code](https://react.rocks/tag/FullStack)
