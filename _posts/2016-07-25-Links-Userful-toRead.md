@@ -11,8 +11,8 @@ tags: toMaster
 ## Python
 1. [LeetCode Best Solution in Python/C++](https://github.com/kamyu104/LeetCode)
 2. [A Python Interpreter-Written in python(Chinese Version)](http://aosabook.org/en/500L/a-python-interpreter-written-in-python.html)
-3. [Fluent Python](../fluent-python.pdf)
-	+ inside python/c++ model
+3. [Fluent Python](../Fluent-Python-official.pdf)
+	+ inside python/c++ model,
 
 ## Docker
 1. hello
