@@ -13,6 +13,9 @@ tags: toMaster
 2. [A Python Interpreter-Written in python(Chinese Version)](http://aosabook.org/en/500L/a-python-interpreter-written-in-python.html)
 3. [Fluent Python](../Fluent-Python-official.pdf)
 	+ inside python/c++ model,
+4. [Online Python Tutor](http://www.pythontutor.com/)
+	+ visualize what the computer is doing step-by-step
+	+ Python, Java, JavaScript, TypeScript, Ruby, C, and C++
 
 ## Docker
 1. hello
