@@ -30,6 +30,7 @@ tags: toMaster
 	+ [Guangyi Zhou](https://cn.linkedin.com/in/guangyizhou)
 	+ 超详细的面试准备，充足的学习资料链接，常见问题的常见答案Secrets-of-the-JavaScript-Ninja.pdf
 	+ [Secrets-of-the-JavaScript-Ninja.pdf](../Secrets-of-the-JavaScript-Ninja.pdf)
+	+ [JavaScript: the good parts.pdf](../javascript_the_good_parts-en.pdf); [JavaScript语言精粹修订版](../JavaScript-the-good-parts-cn.pdf)
 	+ [what-is-the-difference-between-client-side-and-server-side-programming](https://stackoverflow.com/questions/13840429/what-is-the-difference-between-client-side-and-server-side-programming)
 	+ [what-happens-when-you-type-in-a-url-in-browser](https://stackoverflow.com/questions/2092527/what-happens-when-you-type-in-a-url-in-browser)
 	
