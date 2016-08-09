@@ -7,6 +7,7 @@ tags: toMaster
 
 ## DeapLearning
 1. [Tensorflow Learning Notes](http://www.jeyzhang.com/tensorflow-learning-notes.html)
+2. [Tensorflow Resources](https://hackerlists.com/tensorflow-resources/)
 
 ## Python
 1. [LeetCode Best Solution in Python/C++](https://github.com/kamyu104/LeetCode)
