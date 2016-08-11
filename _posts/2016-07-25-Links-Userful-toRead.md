@@ -17,6 +17,7 @@ tags: toMaster
 4. [Online Python Tutor](http://www.pythontutor.com/)
 	+ visualize what the computer is doing step-by-step
 	+ Python, Java, JavaScript, TypeScript, Ruby, C, and C++
+5. [Introduction to Tornado ChineseVersion](http://demo.pythoner.com/itt2zh/)
 
 ## Docker
 1. hello
@@ -24,6 +25,7 @@ tags: toMaster
 ## OS/分布式
 1. [The Architecture of Open Source Applications](http://aosabook.org/en/index.html)
 2. [Awesome Courses abroad](https://github.com/prakhar1989/awesome-courses)
+3. [Maglev--A Fast and Reliable Software Network Load Balancer](../Maglev--A-Fast-and-Reliable-Software-Network-Load-Balancer.pdf)
 
 
 ## JS
