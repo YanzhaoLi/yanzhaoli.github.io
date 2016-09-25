@@ -8,6 +8,8 @@ tags: toMaster
 ## DeapLearning
 1. [Tensorflow Learning Notes](http://www.jeyzhang.com/tensorflow-learning-notes.html)
 2. [Tensorflow Resources](https://hackerlists.com/tensorflow-resources/)
+3. [The Road to Tensorflow](https://smist08.wordpress.com/2016/08/23/the-road-to-tensorflow-part-1-linux/)
+4. [probabilistic-programming](http://javaagile.blogspot.kr/2016/09/probabilistic-programming-part-1.html)
 
 ## Python
 1. [LeetCode Best Solution in Python/C++](https://github.com/kamyu104/LeetCode)
@@ -40,3 +42,5 @@ tags: toMaster
 	
 2. [React Websites with Source Code](https://react.rocks/tag/FullStack)
 3. [Web性能权威指南.pdf](../Web性能权威指南.pdf)
+4. [WeChat-Development](http://mp.weixin.qq.com/s?__biz=MzAxNTI5ODI3OQ==&mid=2653088827&idx=1&sn=2c629e9b946de18ebe1915fd79c52ae5&chksm=805077b3b727fea5dc6e0e0c17bded7e54025cda5c06c36db776cd6c73a1c00587f3373f8e31&scene=1&srcid=0924jVTBVhHRD2YT2nixspdR#rd)
+5. [wechat Awesome Tutorials](https://github.com/Aufree/awesome-wechat-weapp)
