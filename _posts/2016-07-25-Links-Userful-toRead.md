@@ -20,6 +20,7 @@ tags: toMaster
 	+ visualize what the computer is doing step-by-step
 	+ Python, Java, JavaScript, TypeScript, Ruby, C, and C++
 5. [Introduction to Tornado ChineseVersion](http://demo.pythoner.com/itt2zh/)
+6. [Python编程实战-PatternDesign.pdf](../Python编程实战-PatternDesign.pdf)
 
 ## Docker
 1. [lan lewis - web developer in Google JP](https://www.ianlewis.org/en)
