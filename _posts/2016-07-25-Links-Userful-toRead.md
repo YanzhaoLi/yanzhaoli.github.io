@@ -21,6 +21,7 @@ tags: toMaster
 	+ Python, Java, JavaScript, TypeScript, Ruby, C, and C++
 5. [Introduction to Tornado ChineseVersion](http://demo.pythoner.com/itt2zh/)
 6. [Python编程实战-PatternDesign.pdf](../Python编程实战-PatternDesign.pdf)
+7. [PythonTip-DesignPattern](http://www.jianshu.com/p/4f4795f2c9b9#)
 
 ## Docker
 1. [lan lewis - web developer in Google JP](https://www.ianlewis.org/en)
