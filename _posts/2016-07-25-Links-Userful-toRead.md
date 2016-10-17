@@ -10,6 +10,7 @@ tags: toMaster
 2. [Tensorflow Resources](https://hackerlists.com/tensorflow-resources/)
 3. [The Road to Tensorflow](https://smist08.wordpress.com/2016/08/23/the-road-to-tensorflow-part-1-linux/)
 4. [probabilistic-programming](http://javaagile.blogspot.kr/2016/09/probabilistic-programming-part-1.html)
+5. [How to study Tensorflow effectively](https://www.zhihu.com/people/peng-jing-tian)
 
 ## Python
 1. [LeetCode Best Solution in Python/C++](https://github.com/kamyu104/LeetCode)
@@ -22,6 +23,8 @@ tags: toMaster
 5. [Introduction to Tornado ChineseVersion](http://demo.pythoner.com/itt2zh/)
 6. [Python编程实战-PatternDesign.pdf](../Python编程实战-PatternDesign.pdf)
 7. [PythonTip-DesignPattern](http://www.jianshu.com/p/4f4795f2c9b9#)
+8. [Awesome go](https://github.com/avelino/awesome-go/blob/master/README.md?from=groupmessage&isappinstalled=0#command-line)
+9. [FullStackDeveloper-教你成为全栈工程师](../FullStackDeveloper.pdf)
 
 ## Docker
 1. [lan lewis - web developer in Google JP](https://www.ianlewis.org/en)
