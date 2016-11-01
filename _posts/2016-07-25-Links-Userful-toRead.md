@@ -34,6 +34,8 @@ tags: toMaster
 2. [Awesome Courses abroad](https://github.com/prakhar1989/awesome-courses)
 3. [Maglev--A Fast and Reliable Software Network Load Balancer](../Maglev--A-Fast-and-Reliable-Software-Network-Load-Balancer.pdf)
 4. [Preshing on Programming Blog](http://preshing.com/)
+5. [distributed-systems-readings](http://henryr.github.io/distributed-systems-readings/)
+6. [MIT-Distributed-System](http://nil.csail.mit.edu/6.824/2015/schedule.html)
 
 
 ## JS
