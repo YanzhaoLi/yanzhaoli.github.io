@@ -11,6 +11,7 @@ tags: toMaster
 3. [The Road to Tensorflow](https://smist08.wordpress.com/2016/08/23/the-road-to-tensorflow-part-1-linux/)
 4. [probabilistic-programming](http://javaagile.blogspot.kr/2016/09/probabilistic-programming-part-1.html)
 5. [How to study Tensorflow effectively](https://www.zhihu.com/people/peng-jing-tian)
+6. [visual intro to machine learning-part 1](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/?url_type=39&object_type=webpage&pos=1)
 
 ## Python
 1. [LeetCode Best Solution in Python/C++](https://github.com/kamyu104/LeetCode)
@@ -24,6 +25,7 @@ tags: toMaster
 6. [Python编程实战-PatternDesign.pdf](../Python编程实战-PatternDesign.pdf)
 7. [PythonTip-DesignPattern](http://www.jianshu.com/p/4f4795f2c9b9#)
 8. [Awesome go](https://github.com/avelino/awesome-go/blob/master/README.md?from=groupmessage&isappinstalled=0#command-line)
+9. [go-dave.cheney](http://dave.cheney.net/resources-for-new-go-programmers)
 9. [FullStackDeveloper-教你成为全栈工程师](../FullStackDeveloper.pdf)
 
 ## Docker
@@ -36,7 +38,15 @@ tags: toMaster
 4. [Preshing on Programming Blog](http://preshing.com/)
 5. [distributed-systems-readings](http://henryr.github.io/distributed-systems-readings/)
 6. [MIT-Distributed-System](http://nil.csail.mit.edu/6.824/2015/schedule.html)
-
+7. [StackOverflow-Architecture-Serials](http://nickcraver.com/blog/2016/02/03/stack-overflow-a-technical-deconstruction/)
+8. [Go-libpcap Packet Capture](http://www.devdungeon.com/content/packet-capture-injection-and-analysis-gopacket#gopacket#)
+9. [A Distribted System Reading list](https://dancres.github.io/Pages/?url_type=39&object_type=webpage&pos=1)
+10. [并发之痛](http://weibo.com/ttarticle/p/show?id=2309403948698710187414)
+11. [go by example](https://gobyexample.com/?url_type=39&object_type=webpage&pos=1)
+12. [paxos-wechat](http://mp.weixin.qq.com/s?__biz=MzI4NDMyNTU2Mw==&mid=2247483695&idx=1&sn=91ea422913fc62579e020e941d1d059e#rd)
+13. [Write good C++](https://github.com/isocpp/CppCoreGuidelines)
+14. [Large-scale system Stanford](https://cs.stanford.edu/~matei/courses/2015/6.S897/?from=timeline&isappinstalled=0)
+15. [bash, sed, awk](http://www.grymoire.com/Unix/)
 
 ## JS
 1. [Prepare Well for your FrontEnd Interview](http://www.1point3acres.com/bbs/thread-104335-1-1.html)
