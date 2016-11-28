@@ -12,6 +12,7 @@ tags: toMaster
 4. [probabilistic-programming](http://javaagile.blogspot.kr/2016/09/probabilistic-programming-part-1.html)
 5. [How to study Tensorflow effectively](https://www.zhihu.com/people/peng-jing-tian)
 6. [visual intro to machine learning-part 1](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/?url_type=39&object_type=webpage&pos=1)
+7. [Yaojian-Tensorflow-analysis](http://www.cnblogs.com/yao62995/p/5773578.html)
 
 ## Python
 1. [LeetCode Best Solution in Python/C++](https://github.com/kamyu104/LeetCode)
