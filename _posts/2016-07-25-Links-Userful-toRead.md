@@ -48,6 +48,7 @@ tags: toMaster
 13. [Write good C++](https://github.com/isocpp/CppCoreGuidelines)
 14. [Large-scale system Stanford](https://cs.stanford.edu/~matei/courses/2015/6.S897/?from=timeline&isappinstalled=0)
 15. [bash, sed, awk](http://www.grymoire.com/Unix/)
+16. [sectools.org](http://sectools.org/)
 
 ## JS
 1. [Prepare Well for your FrontEnd Interview](http://www.1point3acres.com/bbs/thread-104335-1-1.html)
