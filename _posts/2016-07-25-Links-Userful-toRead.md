@@ -13,6 +13,7 @@ tags: toMaster
 5. [How to study Tensorflow effectively](https://www.zhihu.com/people/peng-jing-tian)
 6. [visual intro to machine learning-part 1](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/?url_type=39&object_type=webpage&pos=1)
 7. [Yaojian-Tensorflow-analysis](http://www.cnblogs.com/yao62995/p/5773578.html)
+8. [深度学习零基础进阶](https://www.52ml.net/21395.html)
 
 ## Python
 1. [LeetCode Best Solution in Python/C++](https://github.com/kamyu104/LeetCode)
@@ -49,7 +50,7 @@ tags: toMaster
 14. [Large-scale system Stanford](https://cs.stanford.edu/~matei/courses/2015/6.S897/?from=timeline&isappinstalled=0)
 15. [bash, sed, awk](http://www.grymoire.com/Unix/)
 16. [sectools.org](http://sectools.org/)
-
+17. [perf教程](https://www.dropbox.com/s/h5p5r7c0utj33mg/perf-BPF-workshop-final.pdf?dl=0)
 ## JS
 1. [Prepare Well for your FrontEnd Interview](http://www.1point3acres.com/bbs/thread-104335-1-1.html)
 	+ [Guangyi Zhou](https://cn.linkedin.com/in/guangyizhou)
