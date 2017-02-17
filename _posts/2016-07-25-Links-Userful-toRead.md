@@ -14,6 +14,8 @@ tags: toMaster
 6. [visual intro to machine learning-part 1](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/?url_type=39&object_type=webpage&pos=1)
 7. [Yaojian-Tensorflow-analysis](http://www.cnblogs.com/yao62995/p/5773578.html)
 8. [深度学习零基础进阶](https://www.52ml.net/21395.html)
+9. [Deep Learning with Keras](https://github.com/leriomaggio/deep-learning-keras-tensorflow)
+10.[Tensorflow Tutorials](https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#13)
 
 ## Python
 1. [LeetCode Best Solution in Python/C++](https://github.com/kamyu104/LeetCode)
@@ -29,6 +31,7 @@ tags: toMaster
 8. [Awesome go](https://github.com/avelino/awesome-go/blob/master/README.md?from=groupmessage&isappinstalled=0#command-line)
 9. [go-dave.cheney](http://dave.cheney.net/resources-for-new-go-programmers)
 9. [FullStackDeveloper-教你成为全栈工程师](../FullStackDeveloper.pdf)
+11. [Deep Learning Application-Washington University in St.Louis](https://github.com/jeffheaton/t81_558_deep_learning)
 
 ## Docker
 1. [lan lewis - web developer in Google JP](https://www.ianlewis.org/en)
