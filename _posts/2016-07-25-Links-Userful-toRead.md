@@ -16,6 +16,8 @@ tags: toMaster
 8. [深度学习零基础进阶](https://www.52ml.net/21395.html)
 9. [Deep Learning with Keras](https://github.com/leriomaggio/deep-learning-keras-tensorflow)
 10.[Tensorflow Tutorials](https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#13)
+11.[Tensorflow dev summit](http://hacker.duanshishi.com/?p=1780)
+12.[Deep Learning Book](https://exacity.github.io/deeplearningbook-chinese/?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io)
 
 ## Python
 1. [LeetCode Best Solution in Python/C++](https://github.com/kamyu104/LeetCode)

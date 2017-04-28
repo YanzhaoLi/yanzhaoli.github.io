@@ -1,7 +1,7 @@
 @echo off  
     
 rem 设置当前目录   
-set current_dir=E:\JS\yanzhaoli.github.io
+set current_dir=E:\yanzhaoli.github.io
   
 pushd %current_dir%    
   
