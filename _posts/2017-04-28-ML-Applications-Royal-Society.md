@@ -1,40 +1,25 @@
 ---
 layout: post
-title: Userful-Links
-categories: [toMaster]
-tags: toMaster
+title: Machine Learning-Applications
+categories: [ML]
+tags: ML
 ---
 
-## DeapLearning
-1. [Tensorflow Learning Notes](http://www.jeyzhang.com/tensorflow-learning-notes.html)
-2. [Tensorflow Resources](https://hackerlists.com/tensorflow-resources/)
-3. [The Road to Tensorflow](https://smist08.wordpress.com/2016/08/23/the-road-to-tensorflow-part-1-linux/)
-4. [probabilistic-programming](http://javaagile.blogspot.kr/2016/09/probabilistic-programming-part-1.html)
-5. [How to study Tensorflow effectively](https://www.zhihu.com/people/peng-jing-tian)
-6. [visual intro to machine learning-part 1](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/?url_type=39&object_type=webpage&pos=1)
-7. [Yaojian-Tensorflow-analysis](http://www.cnblogs.com/yao62995/p/5773578.html)
-8. [深度学习零基础进阶](https://www.52ml.net/21395.html)
-9. [Deep Learning with Keras](https://github.com/leriomaggio/deep-learning-keras-tensorflow)
-10.[Tensorflow Tutorials](https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#13)
-11.[Tensorflow dev summit](http://hacker.duanshishi.com/?p=1780)
-12.[Deep Learning Book](https://exacity.github.io/deeplearningbook-chinese/?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io)
-13. [Kaggle data mining Strategies](http://mp.weixin.qq.com/s/BE1mfmKJTsDSwWi16mllNA)
+## References
+[The Royal Society Machine Learning](https://royalsociety.org/topics-policy/projects/machine-learning/)
 
-## Python
-1. [LeetCode Best Solution in Python/C++](https://github.com/kamyu104/LeetCode)
-2. [A Python Interpreter-Written in python(Chinese Version)](http://aosabook.org/en/500L/a-python-interpreter-written-in-python.html)
-3. [Fluent Python](../Fluent-Python-official.pdf)
-	+ inside python/c++ model,
-4. [Online Python Tutor](http://www.pythontutor.com/)
-	+ visualize what the computer is doing step-by-step
-	+ Python, Java, JavaScript, TypeScript, Ruby, C, and C++
-5. [Introduction to Tornado ChineseVersion](http://demo.pythoner.com/itt2zh/)
-6. [Python编程实战-PatternDesign.pdf](../Python编程实战-PatternDesign.pdf)
-7. [PythonTip-DesignPattern](http://www.jianshu.com/p/4f4795f2c9b9#)
-8. [Awesome go](https://github.com/avelino/awesome-go/blob/master/README.md?from=groupmessage&isappinstalled=0#command-line)
-9. [go-dave.cheney](http://dave.cheney.net/resources-for-new-go-programmers)
-9. [FullStackDeveloper-教你成为全栈工程师](../FullStackDeveloper.pdf)
-11. [Deep Learning Application-Washington University in St.Louis](https://github.com/jeffheaton/t81_558_deep_learning)
+## Bank
+1. 客服自动回复率80%，unveiled Nao from Japan
+2. HSBC允许用户语音识别
+	1. 是否有人录制了你的声音
+	2. 是否有人模仿你的声音
+	3. 感冒了你的声音
+3. Algotrading， hold onto stocks they owed 从8年减少到了5天
+4. 对抗credit and debit card fraud
+5. IBM Build a 'mouseprint' of each user - and trigger an alert if their mouse was being used in an unfamiliar way
+
+## Hospital
+1. 
 
 ## Docker
 1. [lan lewis - web developer in Google JP](https://www.ianlewis.org/en)
