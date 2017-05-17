@@ -19,6 +19,7 @@ tags: toMaster
 11.[Tensorflow dev summit](http://hacker.duanshishi.com/?p=1780)
 12.[Deep Learning Book](https://exacity.github.io/deeplearningbook-chinese/?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io)
 13. [Kaggle data mining Strategies](http://mp.weixin.qq.com/s/BE1mfmKJTsDSwWi16mllNA)
+14. [Deep Learning System Development - Tianqi Chen](http://dlsys.cs.washington.edu/schedule)
 
 ## Python
 1. [LeetCode Best Solution in Python/C++](https://github.com/kamyu104/LeetCode)
