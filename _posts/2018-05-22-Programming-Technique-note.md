@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Userful-Links
-categories: [toMaster]
-tags: toMaster
+title: Programming-Technique
+categories: [Mastered]
+tags: Mastered
 ---
 
 ## DeapLearning
