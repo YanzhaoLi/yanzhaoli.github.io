@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Life2016
+title: Life-Activities
 categories: [life]
 tags: life
 ---
