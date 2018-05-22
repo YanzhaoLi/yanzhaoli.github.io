@@ -1,47 +1,43 @@
 ---
 layout: post
-title: Programming-Technique
+title: Go-Technique
 categories: [Mastered]
 tags: Mastered
 ---
 
-## DeapLearning
-1. [Tensorflow Learning Notes](http://www.jeyzhang.com/tensorflow-learning-notes.html)
-2. [Tensorflow Resources](https://hackerlists.com/tensorflow-resources/)
-3. [The Road to Tensorflow](https://smist08.wordpress.com/2016/08/23/the-road-to-tensorflow-part-1-linux/)
-4. [probabilistic-programming](http://javaagile.blogspot.kr/2016/09/probabilistic-programming-part-1.html)
-5. [How to study Tensorflow effectively](https://www.zhihu.com/people/peng-jing-tian)
-6. [visual intro to machine learning-part 1](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/?url_type=39&object_type=webpage&pos=1)
-7. [Yaojian-Tensorflow-analysis](http://www.cnblogs.com/yao62995/p/5773578.html)
-8. [深度学习零基础进阶](https://www.52ml.net/21395.html)
-9. [Deep Learning with Keras](https://github.com/leriomaggio/deep-learning-keras-tensorflow)
-  10.[Tensorflow Tutorials](https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#13)
-  11.[Tensorflow dev summit](http://hacker.duanshishi.com/?p=1780)
-  12.[Deep Learning Book](https://exacity.github.io/deeplearningbook-chinese/?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io)
-10. [Kaggle data mining Strategies](http://mp.weixin.qq.com/s/BE1mfmKJTsDSwWi16mllNA)
-11. [Deep Learning System Development - Tianqi Chen](http://dlsys.cs.washington.edu/schedule)
-12. [Data Science notes](https://chrisalbon.com/)
+## Go
+
+1. goroutine 开销很小，类似栈分配的消耗。其实是一个用户态线程，go自己有个用户态调度器sched，维护一组gorouine让其在某个内核线程上跑，sched知道啥时候该让某个goroutine停换另一个跑。每个goroutine其实就是在heap上分配了一些空间模拟stack。每个内核线程会有一个上下文P，该上下文和shed一起管理一组goroutine，`runtime.GOMAXPROCS(x)`来设置有几个P，也就是有几个内核线程来跑该程序。
+
+2. chan 会立即阻塞，后面的代码不会执行，直到接收到，或者发送的东西被人接收到
+
+3. goroutine、chan、sync.WaitGroup、select等是并行相关
+
+4. iota是0开始，自动增加，比如
+
+   1. ```
+      const (
+          Sunday = iota  // Sunday = 0
+          Monday         // Monday = 1
+          ...
+          Saturday       // Saturday = 6
+      )
+      ```
+
+5. rune是处理utf-8，比如汉字，相关的内容what23
+
+6. import "log"  两种用法
+
+   1. 第一种是输向标准错误，log.Println(), log.Fatal()
+   2. 第二种是自建一个logger, logg = log.New(out io.Writer, 格式等); 然后logg.Println()
 
 ## Python
-1. [LeetCode Best Solution in Python/C++](https://github.com/kamyu104/LeetCode)
-2. [A Python Interpreter-Written in python(Chinese Version)](http://aosabook.org/en/500L/a-python-interpreter-written-in-python.html)
-3. [Fluent Python](../Fluent-Python-official.pdf)
-  + inside python/c++ model,
-4. [Online Python Tutor](http://www.pythontutor.com/)
-  + visualize what the computer is doing step-by-step
-  + Python, Java, JavaScript, TypeScript, Ruby, C, and C++
-5. [Introduction to Tornado ChineseVersion](http://demo.pythoner.com/itt2zh/)
-6. [Python编程实战-PatternDesign.pdf](../Python编程实战-PatternDesign.pdf)
-7. [PythonTip-DesignPattern](http://www.jianshu.com/p/4f4795f2c9b9#)
-8. [Awesome go](https://github.com/avelino/awesome-go/blob/master/README.md?from=groupmessage&isappinstalled=0#command-line)
-9. [go-dave.cheney](http://dave.cheney.net/resources-for-new-go-programmers)
-10. [FullStackDeveloper-教你成为全栈工程师](../FullStackDeveloper.pdf)
-11. [Deep Learning Application-Washington University in St.Louis](https://github.com/jeffheaton/t81_558_deep_learning)
+1. ​
 
-## Docker K8S Go
-1. [lan lewis - web developer in Google JP](https://www.ianlewis.org/en)
+## Shell
+1. ​
 
-## OS/分布式
+## C/C++
 1. [The Architecture of Open Source Applications](http://aosabook.org/en/index.html)
 2. [Awesome Courses abroad](https://github.com/prakhar1989/awesome-courses)
 3. [Maglev--A Fast and Reliable Software Network Load Balancer](../Maglev--A-Fast-and-Reliable-Software-Network-Load-Balancer.pdf)
