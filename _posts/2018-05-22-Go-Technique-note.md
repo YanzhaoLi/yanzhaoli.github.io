@@ -9,11 +9,15 @@ tags: Mastered
 
 1. goroutine 开销很小，类似栈分配的消耗。其实是一个用户态线程，go自己有个用户态调度器sched，维护一组gorouine让其在某个内核线程上跑，sched知道啥时候该让某个goroutine停换另一个跑。每个goroutine其实就是在heap上分配了一些空间模拟stack。每个内核线程会有一个上下文P，该上下文和shed一起管理一组goroutine，`runtime.GOMAXPROCS(x)`来设置有几个P，也就是有几个内核线程来跑该程序。
 
-2. chan 会立即阻塞，后面的代码不会执行，直到接收到，或者发送的东西被人接收到
+2. chan 会立即阻塞，该goroutine内后面的代码不会执行，直到接收到，或者发送的东西被人接收到
 
-3. goroutine、chan、sync.WaitGroup、select等是并行相关
+   1. `[var] <- chan`  等待chan有值可以拿出来，这句话就可以执行了，比如另一个goroutine中执行了一句chan <- var
 
-4. iota是0开始，自动增加，比如
+3. select 会任意选择其中一个不被阻塞的case语句执行，一般配合for死循环执行
+
+4. goroutine、chan、sync.WaitGroup、select等是并行相关
+
+5. iota是0开始，自动增加，比如
 
    1. ```
       const (
@@ -24,17 +28,14 @@ tags: Mastered
       )
       ```
 
-5. rune是处理utf-8，比如汉字，相关的内容what23
+6. rune是处理utf-8，比如汉字，相关的内容what23
 
-6. import "log"  两种用法
+7. import "log"  两种用法
 
    1. 第一种是输向标准错误，log.Println(), log.Fatal()
    2. 第二种是自建一个logger, logg = log.New(out io.Writer, 格式等); 然后logg.Println()
 
 ## Python
-1. ​
-
-## Shell
 1. ​
 
 ## C/C++
