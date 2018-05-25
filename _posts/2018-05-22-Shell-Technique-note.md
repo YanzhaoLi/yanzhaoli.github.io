@@ -7,6 +7,35 @@ tags: Mastered
 
 
 
+### CentOS Ubuntu 软件包 管理 安装
+
+#### Ubuntu
+
+只下载不安装 `apt-get install **-d**  package`
+
++ 下载位置：/var/cache/apt/archives/
++ `ls -c | head -n 6 | awk 'NR>1{print $1}'`  # 按时间排序后提取出前5个
+
+解压deb包   `ar   -x   *.deb`
+
+搜索deb包  `apt-cache search package`
+
+#### CentOS
+
+只下载不安装 yumdownloader package   当前目录
+
+解压deb包      `rpm2cpio  *.rpm | cpio -idv`
+
+#### 查看tar包
+
++ `tar -tvf *.tar`
++ `gzip -dc file.tar.gz | tar tvf -`
++ `bzip2 -dc file.tar.bz2 |tar tvf -`
+
+
+
+
+
 ### [awk](http://www.grymoire.com/Unix/AwkRef.html) [-arg] 'PATTERN{ACTION}'
 
 ```shell

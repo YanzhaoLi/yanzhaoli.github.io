@@ -7,6 +7,36 @@ tags: Mastered
 
 
 
+## Install 
+
+如何检查系统是否满足安装需求
+
+systemd日志放在哪？systemd运行的kubelet的日志放在哪？首先直接执行看kubelet有啥输出
+
+直接关闭kubelet进程会有啥结果？
+
+如何apt-get只下载deb包不安装，如何测试deb的安装结果？参见shell technique
+
+kubeadm init --kubernetes-version=v1.8.8
+
+
+
+
+
+问题：kubelet-check] The HTTP call equal to 'curl -sSL http://localhost:10255/healthz' failed with error: Get http://localhost:10255/healthz: dial tcp 127.0.0.1:10255: getsockopt: connection refused.
+
+解决：Environment="KUBELET_SYSTEM_PODS_ARGS=--pod-manifest-path=/etc/kubernetes/manifests --allow-privileged=true **--fail-swap-on=false**" 
+
+​	systemctl daemon-reload
+
+问题：Will mark node ubuntu as master by adding a label and a taint 卡死在这里
+
+解决：换了 docker.io  + 安装了kubernetes-cni（kubelet依赖) + 换了原装的kubelet和kubeadm配置
+
+ 
+
+ 
+
 ## Security
 
 #### Security Policy

@@ -15,25 +15,108 @@ tags: Mastered
 
 3. select 会任意选择其中一个不被阻塞的case语句执行，一般配合for死循环执行
 
-4. goroutine、chan、sync.WaitGroup、select等是并行相关
+4. Interface类型想象成一个类，实现了Interface中函数的struct想象成类的实例。**那么参数是interface的话，实参就可以是对应的struct**。当然参数也必须是接口，就可以接受任意struct了。比类好在哪里呢？可以是任意struct，里面有任意属性，包括空struct{}，只要在该struct上定义了interface的方法。**那么空接口类型可以接收任意类型参数**  `reflect.TypeOf(i interface {}) reflect.Type`
 
-5. iota是0开始，自动增加，比如
+   1.  interface中不能包含变量，只能是方法和其它接口
 
-   1. ```
-      const (
-          Sunday = iota  // Sunday = 0
-          Monday         // Monday = 1
-          ...
-          Saturday       // Saturday = 6
-      )
+   2.  一个类型不用显式去定义实现某个接口，只要包含所有interface中定义的方法，这个类型就默认实现了这个接口
+
+   3.  多个类型可以实现相同的接口，一个类型可以实现多个接口， 一个类型实现接口的同时，还可以定义属于自己的方法
+
+   4. 一个interface的属性中除了可包含method外，还可以包含另一个接口（子接口)，那么**父接口可以直接用子接口的函数**, 即接口包含所嵌套接口的所有方法
+
+      1. ```go
+         type SharedInformer interface{
+             Run(stopCh <- chan struct{})
+         }
+         type SharedIndexInformer interface{
+             SharedInformer,
+             AddIndexers(indexers Indexers) error
+             GetIndexer() Indexer
+         }
+         type sharedIndexInformer struct{}
+         s := sharedIndexInformer{struct{}}
+         s.Run(stopCh)
+         ```
+
+      2. 最后一句s.Run（）是可以执行的
+
+5. 一个**struct中可以包含interface类型对象**，那么该结构体可以直接使用该类型对象的方法？不是！但是可以把该struct赋值给某个接口，这个接口就可以使用这个方法了。
+
+6. we can define a method for any **named** type except pointers and interfaces 可以在除了指针和接口外的任何类型（named表示type过的）上定义方法（可以是普通方法，也可以是接口的方法）；**函数**也可以拥有方法
+
+   1. ```go
+      // The HandlerFunc type is an adapter to allow the use of
+      // ordinary functions as HTTP handlers.  If f is a function
+      // with the appropriate signature, HandlerFunc(f) is a
+      // Handler object that calls f.
+      type HandlerFunc func(ResponseWriter, *Request)
+      func (f HandlerFunc) ServeHTTP(w ResponseWriter, req *Request) {
+          f(w, req)  //起了回调函数的作用，不用单独定义一个chan来调用函数了
+      }
+      
+      func ArgServer(w http.ResponseWriter, req *http.Request) {
+          fmt.Fprintln(w, os.Args)
+      }
+      //因为实现了ServeHTTP方法，所以可以被http.Handle调用
+      http.Handle("/args", http.HandlerFunc(ArgServer))
+      //这里的http.HandlerFunc()是执行的类型转换，因为ArgServer函数与HandlerFunc类型有相同的signature
       ```
 
-6. rune是处理utf-8，比如汉字，相关的内容what23
+   2. 
 
-7. import "log"  两种用法
+7. 结构体实现的方法可以在结构体+指针上调用。但指针实现的接口，只能是指针赋值给接口。 
 
-   1. 第一种是输向标准错误，log.Println(), log.Fatal()
-   2. 第二种是自建一个logger, logg = log.New(out io.Writer, 格式等); 然后logg.Println()
+   1. ```go
+      type Configurator interface {run()}
+      type configFactory struct{}
+      func (c *configFactory) run(){}
+      func NewConfigurator() Configurator{
+          return &configFactory{}
+          //return configFactory 是不可以的
+      }
+      ```
+
+8. 接口也可以被包含了该接口的struct赋值，refect.TypeOf(接口)返回的却是结构体类型，但是确只能使用接口方法
+
+   1. ```go
+      type schedulerConfigurator struct{Configurator, name string} //只是为了使用其方法，不需要名称
+      c := NewConfigurator()
+      c = &schedulerConfigurator{c, "liyanzhao"}  //这个赋值是可以的
+      //c.run() is OK; c.name fails
+      ```
+
+   2. 这里更新接口的values是有意义的么？毕竟只能使用的还是接口方法，那么是不是schedulerConfigurator上可以定义覆盖原实体的接口方法呢？**可以**，而且可以只覆盖部分方法，但是configFactory就必须实现所有的方法。
+
+      1. 在源码中可以发现确实覆盖了Configurator的Create()函数，默认configFactory的Create函数实现是f.CreateFromProvider(DefaultProvider)
+      2. 覆盖后是sc.Configurator.CreateFromProvider(sc.algorithmProvider)
+
+   3. 接口可以赋值给结构体么？？？即能恢复成原来的struct么？
+
+9. [reflect包](https://studygolang.com/articles/1251)
+
+   1. reflect.Type 是一个接口对象，里面的方法包括Field，Name，String等
+   2. reflect.Typeof( * ) refect.Type，返回某变量的reflect.Type 
+
+10. goroutine、chan、sync.WaitGroup、select等是并行相关
+
+11. iota是0开始，自动增加，比如
+
+    1. ```
+       const (
+           Sunday = iota  // Sunday = 0
+           Monday         // Monday = 1
+           ...
+           Saturday       // Saturday = 6
+       )
+       ```
+
+12. rune是处理utf-8，比如汉字，相关的内容what23
+
+13. import "log"  两种用法
+
+    1. 第一种是输向标准错误，log.Println(), log.Fatal()
+    2. 第二种是自建一个logger, logg = log.New(out io.Writer, 格式等); 然后logg.Println()
 
 ## Python
 1. ​
