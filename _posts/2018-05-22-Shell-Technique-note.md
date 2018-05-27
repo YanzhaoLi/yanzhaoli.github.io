@@ -34,6 +34,12 @@ tags: Mastered
 
 
 
+##### shell { }  变量替换
+```shell
+for i in {1,2,3}.png; do echo $i; done
+
+for i in {1...100}.jpg; do convert $i ${i%%.*}.png; done
+```
 
 
 ### [awk](http://www.grymoire.com/Unix/AwkRef.html) [-arg] 'PATTERN{ACTION}'
