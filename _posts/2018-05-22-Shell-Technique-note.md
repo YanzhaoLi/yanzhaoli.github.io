@@ -41,6 +41,16 @@ for i in {1,2,3}.png; do echo $i; done
 for i in {1...100}.jpg; do convert $i ${i%%.*}.png; done
 ```
 
+##### shell 正则表达式 比较 =~ operator
+
+```shell
+if [[ $string =~ $extend_epr ]]; then 
+	${#BASH_REMATCH[*]} #提取出匹配组数量
+	$BASH_REMATCH[0]    #整体匹配
+	$BASHE_REMATCH[1]   #第一个submatch组，就是带括号的
+```
+
+
 
 ### [awk](http://www.grymoire.com/Unix/AwkRef.html) [-arg] 'PATTERN{ACTION}'
 
