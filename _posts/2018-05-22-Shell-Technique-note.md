@@ -284,5 +284,17 @@ In the C and Bourne shell, the quote is just a switch. It turns the interpretati
 
 ##### 测试网络带宽 iperf3
 
+##### 网络带宽测试 curl
+
+`curl -o /dev/null -s -w '%{time_connect} %{time_starttransfer} %{time_total}' "http://10.254.149.31:8000/"` 
+
+-s mute模式    -o 写到文件中
+
+-w ‘format’ 在拉取完毕后写一句话到stdout，按照‘format格式’
+
++ time_connect：建立到服务器的 TCP 连接所用的时间
++ time_starttransfer：在发出请求之后，Web 服务器返回数据的第一个字节所用的时间
++ time_total：完成请求所用的时间
+
 
 
