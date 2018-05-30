@@ -7,6 +7,12 @@ tags: Mastered
 
 
 
+### Bash cheatssheets
+
+[bash cheatsheets](https://jimmysong.io/cheatsheets/bash)
+
+
+
 ### CentOS Ubuntu 软件包 管理 安装
 
 #### Ubuntu

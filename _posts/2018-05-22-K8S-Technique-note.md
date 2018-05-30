@@ -35,7 +35,26 @@ kubeadm init --kubernetes-version=v1.8.8
 
  
 
- 
+### ubuntu16.04 下kubeadm安装
+
++ 关闭swapoff -a； iptables -F；
++ 按照官网方法安装docker.io 和 kubelet(自动关联kubernetes-cni包)；
++ kubelet参数中的fs驱动改成和docker info中的驱动一样，cgroupfs
++ 提前准备好下载不下来的image
+  + 
++ kubeadm init --kubernetes-version=v1.10.3 --pod --pod-network-cidr=10.244.0.0/16
++ 另一个node join加入，此时发现node NotReady
++ `kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml` 此时node ready
+
+#### 如何在etcd中找到kubernetes的keys
+
+k8s使用的是3.0版本的etcd，于是首先 `export ETCDCTL_API=3`
+
+然后```etcdctl get / --prefix --keys-only```
+
+### #kubeadm是如何设置权限的呢
+
+flannel kube-proxy 等用到的参数不少都是通过configmap挂载过去的data
 
 ## Security
 
@@ -69,3 +88,9 @@ kubeadm init --kubernetes-version=v1.8.8
       1. Clair：CoreOS的扫描脆弱性的
       2. Kube-bench：Aquasec的用于检查k8s是否安全部署
       3. OpenSCAP
+
+
+
+
+
+![kubernetes-pod-cheatsheet.png](./kubernetes-pod-cheatsheet.png)
