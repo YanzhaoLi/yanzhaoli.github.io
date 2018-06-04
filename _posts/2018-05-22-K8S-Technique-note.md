@@ -13,15 +13,7 @@ tags: Mastered
 
 systemd日志放在哪？systemd运行的kubelet的日志放在哪？首先直接执行看kubelet有啥输出
 
-直接关闭kubelet进程会有啥结果？
-
-如何apt-get只下载deb包不安装，如何测试deb的安装结果？参见shell technique
-
-kubeadm init --kubernetes-version=v1.8.8
-
-
-
-
+直接关闭kubelet进程会有啥结果？master看不到后，就会把该kubelet的pod状态标记为unknown？
 
 问题：kubelet-check] The HTTP call equal to 'curl -sSL http://localhost:10255/healthz' failed with error: Get http://localhost:10255/healthz: dial tcp 127.0.0.1:10255: getsockopt: connection refused.
 
@@ -55,6 +47,78 @@ k8s使用的是3.0版本的etcd，于是首先 `export ETCDCTL_API=3`
 ### #kubeadm是如何设置权限的呢
 
 flannel kube-proxy 等用到的参数不少都是通过configmap挂载过去的data
+
+
+
+### 暴露给cluster外访问
+
+**Pod**方式
+
++ hostnetwork：true 直接使用**所在node**主机网络，可看到所有网络接口，可以用作flannel来管理主机网络
++ hostport：xxx   完成容器到**所在node的**host端口映射，可以用作nginx ingress controller中的pod，将外部traffic都流向主机的443和80端口
+
+**Service**方式
+
++ NodePort：服务端口映射到**每一台Node**主机端口映射
+
+**Ingress**方式
+
++ 一个controller（比如Deployment)，这是一组pod（一般是nginx/HAproxy）, 使用hostport映射到主机端口
++ 一个ingress对象，里面定义需要域名->服务的映射，由controller中的nginx等来使用。
+
+
+
+### configMap
+
+无法修改已经注入到pod中的env
+
+```k8s
+envFrom:
+- configMapRef:
+  name: configmap-name
+```
+
+可以实时修改volumes里面的值, 通过更新configmap
+
+```
+volumesMounts:
+- name: volumes-name
+  mountPath: path
+Volumes：
+- name： volumes-name
+  configMap:
+    key:data
+```
+
+
+
+#### PodPreset
+
++ 你不想一个个更改pod的Template，那么创建一个带Selector的podPreset，在请求pod创建时就会自动调用podpreset对相应Template进行修改
++ pod的spec中可以添加annotation，明确不让任何podPreset修改该pod的启动模板
+
+
+
+#### Aggregated API Server
+
+将原来的API Server拆开，方便用户加入自己的API Server。
+
+用户可以自定义资源类型，为了管理该类型，还会自定义该类型的controller
+
+
+
+### [understanding cui - Jon Langemak](http://www.dasblinkenlichten.com/understanding-cni-container-networking-interface/)
+
++ 首先container runtime先创建一个网络命名空间`ip netns add NAME`
++ 然后准备环境变量: plugin路径、使用的命令，哪个容器（就是netns）等
++ 配置文件中指定使用什么插件如bridge， 以stdin的方式给插件
++ `env-setting    plugin_executable   <   xx.conf` 
+
+
+
+
+
+
 
 ## Security
 
