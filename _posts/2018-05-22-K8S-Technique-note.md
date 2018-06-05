@@ -107,16 +107,58 @@ Volumes：
 
 
 
-### [understanding cui - Jon Langemak](http://www.dasblinkenlichten.com/understanding-cni-container-networking-interface/)
+### [understanding CNI - Jon Langemak](http://www.dasblinkenlichten.com/understanding-cni-container-networking-interface/)
 
-+ 首先container runtime先创建一个网络命名空间`ip netns add NAME`
-+ 然后准备环境变量: plugin路径、使用的命令，哪个容器（就是netns）等
-+ 配置文件中指定使用什么插件如bridge， 以stdin的方式给插件
-+ `env-setting    plugin_executable   <   xx.conf` 
+首先，container runtime先创建一个网络命名空间`ip netns add NAME`
+
+接着，调用插件，讲该网络命名空间接入网络：
+
++ 准备环境变量: plugin路径、使用的命令，哪个容器（就是netns）等
++ 准备配置文件：指定使用什么插件如bridge， 以stdin的方式给插件
+  + `env-setting    plugin_executable   <   xx.conf` 
++ 举例：
+  + 创建一个网桥名为cbr0，然后创建一个pair连接到该网桥上
+  + ipam分配ip地址（可以采用dhcp，也可以指定）给命名空间内的一端
 
 
 
+### [How Service Works](http://www.dasblinkenlichten.com/kubernetes-networking-101-services/)
 
+强烈推荐阅读这篇文章，讲述了如何抓包，如何知道veth的pair，iptables-save的解析。
+
+**概述**：从pod中访问某service，首先给veth的pair接口，该接口把service ip重定向到对应的pod ip，采用的是DNAT的方式，该网络接口就会通过路由找到去某pod ip的下一跳。service ip是如何实现负载均衡到每一个pod ip呢？答案是iptables支持概率模式，即匹配某条的概率
+
+**容器角度抓包分析**：
+
+在container中找到veth的pair的index，然后在主机中找到那个@index的接口，比如veth75b33
+
+`tcpdump -i veth75b33 -nn`  在该接口上的所有包，nn表示不将协议和端口转为名字：以数字形式显示
+
+此时，可以看出目的地试service ip：service port；回来的包也是serviceip：serviceport
+
+**主机角度抓包分析：**
+
+`tcpdump -i ens32  -nn   host   $podip`  
+
+表示在物理接口ens32上，抓取流向和留出  主机（host表示主机，net表示网络）$podip 的所有包，即src或dst是$podip的
+
+此时，可以看出从$podip上发出的包的目的地已经被修正为destpodip:destpodport, 也就是在物理主机接口看来，是$podip 和 $destpodip之间在通信
+
+**iptables-save 命令输出解析**
+
+分析转发规则  <u>**只需要看NAT的prerouting 和 postrouting链**</u>
+
++ -A  PREROUTING -A append追加给该chain一条规则，若包成功匹配该条，则执行 -j 操作 
+  + -p tcp    -d  $serviceip    -s [net/hostname/ip] -d [net/hostname/ip]
+  + -i interface    -o interface    # 流入/流出该端口 的包
++ -j KUBESERVICE： 跳转到KUBE-SERVICE链继续执行
++ -j DNAT：  DNAT是一个链的终止target，修改该包的目的地址和端口；使用DNAT的话，返回的包自动NAT
+  + `-j DNAT --to-destination 10.100.3.7:8080`
++ -m      *iptables可以使用扩展模块来进行数据包的匹配，语法就是 -m module_name*
+  + `-m --comment`  注释
+  + `-m sttistic  --mode random  --probability 0.3333329999982`    概率
+  + `-m tcp   --dport $port`   使用 tcp 扩展模块的功能 (tcp扩展模块提供了 --dport, --tcp-flags, --sync等） 
++ -p tcp  vs  -m tcp： 是两个不同层面的东西，一个是说当前规则作用于 tcp 协议包，而后一是说明要使用iptables的tcp模块的功能 (--dport 等)  
 
 
 
@@ -126,7 +168,7 @@ Volumes：
 
 1. policy是需要授权的，然后user或者目标pod的ServiceAccount才能使用。大部分pod不是user创建的，而是由ControllerManager创建的（Deployment、ReplicaSet），所以如果授权Controller可以访问策略，那么基本上Controller就可以访问所有pod了。所以，**一般是授权给pod的Service Account**
 2. RBAC是标准k8s授权模式
-3. ​
+3. 
 
 #### Security Tips and Practices
 
