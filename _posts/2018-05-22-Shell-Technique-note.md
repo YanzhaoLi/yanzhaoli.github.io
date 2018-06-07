@@ -17,7 +17,7 @@ tags: Mastered
 
 #### Ubuntu
 
-只下载不安装 `apt-get install **-d**  package`
+只下载不安装 `apt-get install -d  package`
 
 + 下载位置：/var/cache/apt/archives/
 + `ls -c | head -n 6 | awk 'NR>1{print $1}'`  # 按时间排序后提取出前5个
@@ -26,17 +26,33 @@ tags: Mastered
 
 搜索deb包  `apt-cache search package`
 
+重新打包deb包
+
+
+
 #### CentOS
 
 只下载不安装 yumdownloader package   当前目录
 
-解压deb包      `rpm2cpio  *.rpm | cpio -idv`
+解压rpm包      `rpm2cpio  *.rpm | cpio -idv`
 
 #### 查看tar包
 
 + `tar -tvf *.tar`
 + `gzip -dc file.tar.gz | tar tvf -`
 + `bzip2 -dc file.tar.bz2 |tar tvf -`
+
+
+
+#####多行字符串
+
+```bash
+text="
+how are you
+fine \$how"
+echo "$text" > filename
+# "$text" 和 $text是不一样的
+```
 
 
 
@@ -298,3 +314,4 @@ In the C and Bourne shell, the quote is just a switch. It turns the interpretati
 
 
 
+`arp $IP -nn`
