@@ -353,3 +353,131 @@ All of the default cluster roles and rolebindings are labeled with `kubernetes.
 
 
 ![kubernetes-pod-cheatsheet.png](./kubernetes-pod-cheatsheet.png)
+
+
+
+## Linux Namespace
+
+#### 系统调用
+
+clone()   创建新进程，创建新ns，将新进程放入新ns。可以使用参数指定多类新ns
+
++ `clone(container_main, container_stack+STACK_SIZE, CLONE_NEWUTS | CLONE_NEWIPC | SIGCHLD, NULL)`
+
+unshare()    不创建新进程，创建新ns，将当前进程加入新ns。
+
+setns()         不创建新进程，不创建ns，将当前进程加入一个已经存在的ns。
+
+对于pid namespace，unshare/setns，并不将当前进程加入新ns，而是子进程加入新的ns，因为getpid()返回的应该是个不变的pid，不能改变。
+
+#### 内核结构
+
+`task_struct->struct cred -> struct nsproxy -> ust_ns/ips_ns/mnt_ns/net_ns/user_ns`
+
+#### 用户层工具
+
+unshare   `unshare -U/m/i/n/p /bin/bash` 
+
+ip netns 
+
+nsenter
+
+####各NS详解
+
+User Namespace除了隔离用户ID和用户组ID之外，还对每个Namespace进行了Capability的隔离和控制。
+
+用户在新namespace中有全部权限，但是他在创建他的父namespace中不含任何权限。就算调用和创建他的进程有全部权限也是如此。所以哪怕是root用户调用了clone()在user namespace中创建出的新用户在外部也没有任何权限 
+
+
+
+## Linux CGroup
+
+https://juejin.im/post/5a113fd851882575cb73b1a5
+
+本质上来说，cgroups是内核附加在程序上的一系列钩子（hooks），通过程序运行时对资源的调度触发相应的钩子以达到资源追踪和限制的目的。 
+
++ Resource limitation: 限制资源使用，比如内存使用上限以及文件系统的缓存限制。
++ Prioritization: 优先级控制，比如：CPU利用和磁盘IO吞吐。
++ Accounting: 一些审计或一些统计，主要目的是为了计费。
++ Control: 挂起进程，恢复执行进程。
+
+术语
+
+- task（任务）：cgroups的术语中，task就表示系统的一个进程。
+- cgroup（控制组）：cgroups 中的资源控制都以cgroup为单位实现。cgroup表示按某种资源控制标准划分而成的任务组，包含一个或多个子系统。一个任务可以加入某个cgroup，也可以从某个cgroup迁移到另外一个cgroup。
+- subsystem（子系统）：cgroups中的subsystem就是一个资源调度控制器（Resource Controller）。比如CPU子系统可以控制CPU时间分配，内存子系统可以限制cgroup内存使用量。子系统就那几类
+- hierarchy（层级树）：hierarchy由一系列cgroup以一个树状结构排列而成，每个hierarchy通过绑定对应的subsystem进行资源调度。hierarchy中的cgroup节点可以包含零或多个子节点，子节点继承父节点的属性。整个系统可以有多个hierarchy
+
+ #### 查询cgroup及子系统挂载状态
+
+- 查看所有的cgroup：lscgroup
+- 查看所有支持的子系统：lssubsys -a
+- 查看所有子系统挂载的位置： lssubsys –m
+- 查看单个子系统（如memory）挂载位置：lssubsys –m memory
+
+#### 层次结构
+
+cgroup（层级）->subsystem（包括cpu/mem/cpuset/net...)->Hierarchy(文件系统)
+
+#### 使用方法
+
+首先，挂载cgroups
+
+`mount -t tmpfs cgroups /sys/fs/cgroup` 
+
+其次，在根Hierarchy上创建子系统
+
+```shell
+/sys/fs/cgroup/cpu/lyz/cpu.cfs_quota_us
+/sys/fs/cgroup/cpu/lyz/tasks
+#cgroup下的cpu子系统中，有一个lyz 层级，其内的tasks保存加入进来的进程，cpu.filename保存限制参数
+```
+
+然后，创建一个Hierarchy，并**挂载子系统**
+
+```shell
+mkdir /sys/fs/cgroup/cg1   
+# 格式： mount -t cgroup -o subsystems name /cgroup/name
+mount –t cgroup –o cpu,memory cpu_and_mem /sys/fs/cgroup/cg1
+# 于是 cg1/下有cpu_and_mem文件夹，管控的是cpu，memory
+```
+
+#### 使用规则
+
+1. 同一个hierarchy可以附加多个子系统，比如`mount -t cgroup -o cpu,memroy cpu_mem /sys/fs/cgroup/cg1`
+   1. 就是某文件夹代表的是多个子系统。
+2. 一个子系统下有一个hierarchy，其下面不能再包含，其已属于其它subsystem的hierarchy。
+   1. 不能再被挂载一个Hierarchy
+3.  一个task不能属于同一个hierarchy的不同cgroup 
+   1.  `PREFIX/cg1/tasks `和` PREFIX/cg2/tasks `不能含相同pid
+4. 进程创建的子进程默认属于同一个cgroup，但是可以自由移动
+
+#### CGroup的子系统
+
+- blkio： 这个subsystem可以为块设备设定输入/输出限制，比如物理驱动设备（包括磁盘、固态硬盘、USB等）。
+- cpu： 这个subsystem使用调度程序控制task对CPU的使用。
+- cpuacct： 这个subsystem自动生成cgroup中task对CPU资源使用情况的报告。
+- cpuset： 这个subsystem可以为cgroup中的task分配独立的CPU（此处针对多处理器系统）和内存。
+- devices 这个subsystem可以开启或关闭cgroup中task对设备的访问。
+- freezer 这个subsystem可以挂起或恢复cgroup中的task。
+- memory 这个subsystem可以设定cgroup中task对内存使用量的限定，并且自动生成这些task对内存资源使用情况的报告。
+- perfevent 这个subsystem使用后使得cgroup中的task可以进行统一的性能测试。{![perf: Linux CPU性能探测器，详见[perf.wiki.kernel.org/index.php/M…](https://link.juejin.im?target=https%3A%2F%2Fperf.wiki.kernel.org%2Findex.php%2FMainPage%5D%7D)
+- *net_cls 这个subsystem Docker没有直接使用，它通过使用等级识别符(classid)标记网络数据包，从而允许 Linux 流量控制程序（TC：Traffic Controller）识别从具体cgroup中生成的数据包。
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
