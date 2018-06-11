@@ -213,3 +213,63 @@ tags: Mastered
 
 除了sync.Once和sync.WaitGroup类型外，其它类型大多用于low-level library routines，high-level的同步工作请使用channels和communication
 
+
+
+
+
+## To Read => Summary
+
+[工业级go编程 Go for Industrial Programming](https://peter.bourgon.org/go-for-industrial-programming/#structuring-your-code-and-repository)
+
+[图解Go 并发](https://medium.com/@trevor4e/learning-gos-concurrency-through-illustrations-8c4aff603b3)
+
+[重读Serverless Architecture](https://blog.symphonia.io/revisiting-serverless-architectures-29f0b831303c)
+
+[如何组织你的go应用](https://github.com/katzien/talks/blob/master/how-do-you-structure-your-go-apps/gopherconiceland-2018-06-02/slides.pdf)
+
+[创建Search微服务](https://ryanmccue.ca/how-to-create-a-search-microservice/)
+
+[go高效比较字符串](https://www.digitalocean.com/community/questions/how-to-efficiently-compare-strings-in-go)
+
+[go胜利之后](http://redmonk.com/jgovernor/2018/05/25/kubernetes-won-so-now-what/)
+
+[go命令行调试cheatsheat](https://github.com/trstringer/cli-debugging-cheatsheets/blob/master/go.md)
+
+[Exploring-container-security-Isolation-at-different-layers-of-the-Kubernetes-stack.html](https://cloudplatform.googleblog.com/2018/05/Exploring-container-security-Isolation-at-different-layers-of-the-Kubernetes-stack.html)
+
+[Kubernetes-best-practices-Organizing-with-Namespaces.html](https://cloudplatform.googleblog.com/2018/04/Kubernetes-best-practices-Organizing-with-Namespaces.html)
+
+[Kubernetes-best-practices-Setting-up-health-checks-with-readiness-and-liveness-probes](https://cloudplatform.googleblog.com/2018/05/Kubernetes-best-practices-Setting-up-health-checks-with-readiness-and-liveness-probes.html)
+
+[https://cloudplatform.googleblog.com/2018/03/exploring-container-security-an-overview.html](https://cloudplatform.googleblog.com/2018/03/exploring-container-security-an-overview.html)
+
+[https://www.weave.works/blog/kubernetes-horizontal-pod-autoscaler-and-prometheus](https://www.weave.works/blog/kubernetes-horizontal-pod-autoscaler-and-prometheus)
+
+[https://speakerd.s3.amazonaws.com/presentations/1ff354ef94f24ca69fd7063684f3af99/The_Robustness_of_Go.pdf](https://speakerd.s3.amazonaws.com/presentations/1ff354ef94f24ca69fd7063684f3af99/The_Robustness_of_Go.pdf)
+
+[https://www.weave.works/blog/kubernetes-best-practices](https://www.weave.works/blog/kubernetes-best-practices)
+
+[https://talks.bjk.fyi/bketelsen/talks?p=gcru18-best#/](https://talks.bjk.fyi/bketelsen/talks?p=gcru18-best#/)
+
+[https://blog.depado.eu/post/checklist-for-go-projects](https://blog.depado.eu/post/checklist-for-go-projects)
+
+[https://github.com/teh-cmc/go-internals/blob/master/chapter2_interfaces/README.md](https://github.com/teh-cmc/go-internals/blob/master/chapter2_interfaces/README.md)
+
+[https://www.reddit.com/r/kubernetes/comments/8b7f0x/we_are_kubernetes_developers_ask_us_anything/](https://www.reddit.com/r/kubernetes/comments/8b7f0x/we_are_kubernetes_developers_ask_us_anything/)
+
+[https://katacontainers.io/posts/why-kata-containers-doesnt-replace-kubernetes/](https://katacontainers.io/posts/why-kata-containers-doesnt-replace-kubernetes/)
+
+[https://blog.chewxy.com/2018/03/18/golang-interfaces/](https://blog.chewxy.com/2018/03/18/golang-interfaces/)
+
+[https://kubernetes.io/blog/2018/03/principles-of-container-app-design/](https://kubernetes.io/blog/2018/03/principles-of-container-app-design/)
+
+[https://www.programming-books.io/essential/go/](https://www.programming-books.io/essential/go/)
+
+[https://www.weave.works/blog/kops-vs-kubeadm](https://www.weave.works/blog/kops-vs-kubeadm)
+
+[https://github.com/enocom/gopher-reading-list](https://github.com/enocom/gopher-reading-list)
+
+[https://github.com/dgryski/go-perfbook/blob/master/performance-zh.md](https://github.com/dgryski/go-perfbook/blob/master/performance-zh.md)
+
+[https://golang.google.cn/ref/mem](https://golang.google.cn/ref/mem)
+
