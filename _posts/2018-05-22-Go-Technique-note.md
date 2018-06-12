@@ -206,6 +206,10 @@ tags: Mastered
   cd ~/.vim/bundle/  && git clone https://github.com/fatih/vim-go.git  
   ```
 
++ 调试工具：
+
+  + [Delve](https://github.com/derekparker/delve)
+
 
 
 
@@ -235,41 +239,50 @@ tags: Mastered
 
 [go命令行调试cheatsheat](https://github.com/trstringer/cli-debugging-cheatsheets/blob/master/go.md)
 
-[Exploring-container-security-Isolation-at-different-layers-of-the-Kubernetes-stack.html](https://cloudplatform.googleblog.com/2018/05/Exploring-container-security-Isolation-at-different-layers-of-the-Kubernetes-stack.html)
-
-[Kubernetes-best-practices-Organizing-with-Namespaces.html](https://cloudplatform.googleblog.com/2018/04/Kubernetes-best-practices-Organizing-with-Namespaces.html)
-
-[Kubernetes-best-practices-Setting-up-health-checks-with-readiness-and-liveness-probes](https://cloudplatform.googleblog.com/2018/05/Kubernetes-best-practices-Setting-up-health-checks-with-readiness-and-liveness-probes.html)
-
-[https://cloudplatform.googleblog.com/2018/03/exploring-container-security-an-overview.html](https://cloudplatform.googleblog.com/2018/03/exploring-container-security-an-overview.html)
-
 [https://www.weave.works/blog/kubernetes-horizontal-pod-autoscaler-and-prometheus](https://www.weave.works/blog/kubernetes-horizontal-pod-autoscaler-and-prometheus)
 
 [https://speakerd.s3.amazonaws.com/presentations/1ff354ef94f24ca69fd7063684f3af99/The_Robustness_of_Go.pdf](https://speakerd.s3.amazonaws.com/presentations/1ff354ef94f24ca69fd7063684f3af99/The_Robustness_of_Go.pdf)
 
 [https://www.weave.works/blog/kubernetes-best-practices](https://www.weave.works/blog/kubernetes-best-practices)
 
-[https://talks.bjk.fyi/bketelsen/talks?p=gcru18-best#/](https://talks.bjk.fyi/bketelsen/talks?p=gcru18-best#/)
+[Code Like the Go Team](https://talks.bjk.fyi/bketelsen/talks?p=gcru18-best#/)
 
-[https://blog.depado.eu/post/checklist-for-go-projects](https://blog.depado.eu/post/checklist-for-go-projects)
++ 完成同一个功能的不同版本，让它们有共同的父package
++ app = domain types + Services
+  + domain type 描述类型和行为，是app的实体。每个单独的package。struct表示类型+interface表示操作
+  + Services ：domain接口的实现，由dependency管理(外部数据+传输逻辑)，每个dependency一个package。
+  + 举例：struct Product，对应产品存储方法 interface ProductService，依赖外部存储比如nfs
++ 命名
+  + 标量用重复字符代表集合/数组等，var tt []*Thing
+  + 同一个Domain Type下有多个类型，那么一个Package，每个类型一个文件
+  + 尽量避免else
+  + 某package内的变量命就不要包含包信息了，比如log.LogInfo -> log.Info()
 
-[https://github.com/teh-cmc/go-internals/blob/master/chapter2_interfaces/README.md](https://github.com/teh-cmc/go-internals/blob/master/chapter2_interfaces/README.md)
+[Checklist for Go projects](https://blog.depado.eu/post/checklist-for-go-projects)
 
-[https://www.reddit.com/r/kubernetes/comments/8b7f0x/we_are_kubernetes_developers_ask_us_anything/](https://www.reddit.com/r/kubernetes/comments/8b7f0x/we_are_kubernetes_developers_ask_us_anything/)
++ 介绍一个go项目所需要的工具、配置、编译等等。
 
-[https://katacontainers.io/posts/why-kata-containers-doesnt-replace-kubernetes/](https://katacontainers.io/posts/why-kata-containers-doesnt-replace-kubernetes/)
+[go internals](https://github.com/teh-cmc/go-internals/blob/master/chapter2_interfaces/README.md)
+
++ 介绍了go interfaces和method的内部实现方式，通过汇编展示
+
+[we_are_kubernetes_developers_ask_us_anything/](https://www.reddit.com/r/kubernetes/comments/8b7f0x/we_are_kubernetes_developers_ask_us_anything/)
+
++ 问了啥？回答了啥？
 
 [https://blog.chewxy.com/2018/03/18/golang-interfaces/](https://blog.chewxy.com/2018/03/18/golang-interfaces/)
 
-[https://kubernetes.io/blog/2018/03/principles-of-container-app-design/](https://kubernetes.io/blog/2018/03/principles-of-container-app-design/)
++ Accept interfaces, return structs 
 
-[https://www.programming-books.io/essential/go/](https://www.programming-books.io/essential/go/)
+[https://kubernetes.io/blog/2018/03/principles-of-container-app-design/](https://kubernetes.io/blog/2018/03/principles-of-container-app-design/)
 
 [https://www.weave.works/blog/kops-vs-kubeadm](https://www.weave.works/blog/kops-vs-kubeadm)
 
 [https://github.com/enocom/gopher-reading-list](https://github.com/enocom/gopher-reading-list)
 
-[https://github.com/dgryski/go-perfbook/blob/master/performance-zh.md](https://github.com/dgryski/go-perfbook/blob/master/performance-zh.md)
+[编写和优化Go代码](https://github.com/dgryski/go-perfbook/blob/master/performance-zh.md)
+
++ 介绍了很多优化技巧，可以看一看
 
 [https://golang.google.cn/ref/mem](https://golang.google.cn/ref/mem)
 

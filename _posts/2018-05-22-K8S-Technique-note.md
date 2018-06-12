@@ -73,7 +73,7 @@ flannel kube-proxy 等用到的参数不少都是通过configmap挂载过去的d
 
 
 
-### configMap
+### ConfigMap
 
 无法修改已经注入到pod中的env
 
@@ -109,6 +109,43 @@ Volumes：
 将原来的API Server拆开，方便用户加入自己的API Server。
 
 用户可以自定义资源类型，为了管理该类型，还会自定义该类型的controller
+
+
+
+#### kubernetes nampespace
+
+[转：如何利用k8s namespace来管理成千上完的资源](https://cloudplatform.googleblog.com/2018/04/Kubernetes-best-practices-Organizing-with-Namespaces.html)
+
+default在大生产系统中不建议使用，最好创建几个ns，来管理服务们(参考一下flannel将各类资源放到不同ns)。并设置RBAC和ResourceQuotas
+
++ 创建：别怕创建ns，反而可能会提高性能，因为单个ns中资源减少了。 `kubectl create namespace test`，也可以添加标签。
++ 切换：使用ns可以通过指定ns名来完成，或者直接切换到某个ns，让你们组全在这个ns下工作。使用 [kubens](https://github.com/ahmetb/kubectx)  命令切换active ns。比如`kubens test`
++ 使用：跨ns访问service，只需要加上ns后缀即可`<Service Aame>.<NamespaceName>.svc.cluster.local` 实际使用只需要service.ns。**使用Network Policy也可以隔离ns**
+
+
+
+#### 探针做健康检查
+
+[Kubernetes best practices: Setting up health checks with readiness and liveness probes](https://cloudplatform.googleblog.com/2018/05/Kubernetes-best-practices-Setting-up-health-checks-with-readiness-and-liveness-probes.html)
+
+两种探针类型：
+
++ Readiness: 准备好了，Service可以向其发traffic了。默认Service在pod启动完毕就会发流量，但有了探针，pod准备好之后才接收流量。
++ Liveness：还活着。默认一直发流量给pod，但是总该去查查它死了没，对吧。
+
+三种探针方式：
+
++ http：最常用。你的容器包含一个lightweight httpserver，可以响应http请求
++ Command：你的容器有这么一个命令，执行它就知道自己是否健康
++ TCP：上面俩都不行了，就跟你的容器某端口建立一个TCP连接，成功了就健康，, a [gRPC](https://grpc.io/) or FTP service is a prime candidate for this type of probe 。
+
+配置探针参数：
+
+- `initialDelaySeconds`: 从*app启动*到*探针开始探测*的时间间隔。要设置好，不然app还没起来，探针就探测肯定跪，然后就永远不停的重启了。
+- `periodSeconds`: 多长时间检查一次，默认10s
+- `timeoutSeconds`: 发起探针请求后，多长时间没收到回复就标明跪了，timeout了，默认1s
+
+
 
 
 
@@ -352,7 +389,164 @@ All of the default cluster roles and rolebindings are labeled with `kubernetes.
 
 
 
-![kubernetes-pod-cheatsheet.png](./kubernetes-pod-cheatsheet.png)
+## GCP容器安全系列报告
+
+1. [Exploring container security: An overview](https://cloudplatform.googleblog.com/2018/03/exploring-container-security-an-overview.html)
+2. [Exploring container security: Node and container operating systems](https://cloudplatform.googleblog.com/2018/04/exploring-container-security-Node-and-container-operating-systems.html)
+3. [Exploring container security: Digging into Grafeas container image metadata](https://cloudplatform.googleblog.com/2018/04/exploring-container-security-digging-into-Grafeas-container-image-metadata.html)
+4. [Exploring container security: Protecting and defending your Kubernetes Engine network](https://cloudplatform.googleblog.com/2018/04/exploring-container-security-protecting-and-Defending-your-Kubernetes-Engine-network.html)
+5. [Exploring container security: Running a tight ship with Kubernetes Engine 1.10](https://cloudplatform.googleblog.com/2018/04/Exploring-container-security-Running-a-tight-ship-with-Kubernetes-Engine-1-10.html)
+6. [Exploring container security: Using Cloud Security Command Center (and five partner tools) to detect and manage an attack](https://cloudplatform.googleblog.com/2018/05/Exploring-container-security-Using-Cloud-Security-Comma.html)
+7. [Exploring container security: Isolation at different layers of the Kubernetes stack](https://cloudplatform.googleblog.com/2018/05/Exploring-container-security-Isolation-at-different-layers-of-the-Kubernetes-stack.html)
+
+####1. 概述
+
+容器仅仅是进程的边界，而VM提供的边界包括：app、资源、资源分配，所以你要用GCP。这里面提到的最重要的是runtime security，KubeCon EU 2018 有相关的报告，包括gVisor，[Secure Pods](https://kccnceu18.sched.com/event/Dqvf/secure-pods-tim-allclair-google-advanced-skill-level?iframe=no&w=100%&sidebar=yes&bg=no) ，[Kubernetes Runtime Security: What Happens If A Container Goes Bad?](https://kccnceu18.sched.com/event/Dqvx/kubernetes-runtime-security-what-happens-if-a-container-goes-bad-jen-tong-maya-kaczorowski-google-intermediate-skill-level?iframe=no&w=100%&sidebar=yes&bg=no) ，[Best Practices for Container Security at Scale](https://kccnceu18.sched.com/event/Dqv1/best-practice-for-container-security-at-scale-dawn-chen-zhengyu-he-google-intermediate-skill-level?iframe=no&w=100%&sidebar=yes&bg=no) 等
+
+**基础设施安全**：咋使用k8s的这些工具
+
++ 身份认证与授权：RBAC提供对资源的细粒度访问；底层云基础设施提供，比如GCP的IAM
++ 日志：API 审计日志
++ 如何存储Secrets：在app层加密存入etcd； 在存储层加密然后存入etcd
++ 容器网络隔离：network policy；或者 You can also create [Private Clusters](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters), in beta, to use only private IPs for your master and nodes. 
+
+**软件供应链安全**：
+
++ 镜像、hostOS、app本身、镜像中app依赖的系统工具及库
+
+**运行时安全：**能够检测/响应 对running container的威胁
+
++ 从baseline检测异常行为，基于系统调用、网络调用等信息
++ Forensics识别事件，基于日志、镜像
++ 阻止潜在威胁，通过对容器进行网络隔离、停止或重启容器等
++ 运行时策略或隔离？你的环境荀彧哪些行为
+
+#### 2. Node操作系统和Container操作系统
+
+攻击面：运行在node上的os + 容器的image。哈哈：前者请选用google的[Container-optimized OS (COS)](https://cloud.google.com/container-optimized-os/) ，后者请选用 [Google Container Registry](https://cloud.google.com/container-registry/) 
+
+**COS安全设计：**
+
++ 只提供运行容器需要的packages，只开启容器运行需要的feature：降低攻击面
++ 根文件系统只读：启动时在kernel进行checksum检查。
+  + home目录、日志、镜像分离在rootfs之外。永久存储
+  + 配置文件/etc运行时注入，重启会消失，即Stateless Configuration。
++ 安全增强的内核：开启了LSM（g家自己的LoadPin LSM）、IMA、AUDIT、APPARMOR等 [kernel features](https://chromium.googlesource.com/chromiumos/overlays/board-overlays/+/master/overlay-lakitu/sys-kernel/lakitu-kernel-4_14/files/base.config#2950) 
++ 提供健全的默认配置：比如 [sysctl settings](https://chromium.googlesource.com/chromiumos/overlays/board-overlays/+/master/overlay-lakitu/chromeos-base/chromeos-base/files/00-sysctl.conf#84) that disable ptrace and unprivileged bpf, a locked down firewall,
++ 自动更新
+
+**images安全点：**
+
++ 所有都是g自己维护的，知根知底
++ 不停的进行脆弱性扫描
++ 多层次的测试：kernel fuzz testing by [syzkaller](https://github.com/google/syzkaller), cluster-level Kubernetes tests, and several performance benchmarks 
+
+#### 3. Grafeas项目 
+
+对images提供结构化的，元数据访问API。利用Grafeas你可以track你的container images信息，甚至可以用 [in-toto](https://in-toto.github.io/)  基于Grafeas配置直接写attestations，然后Admissions Controls依此来拒绝/同意你的应用部署
+
++ build：容器什么时候创建的、谁创建的
++ Deployment History ：容器镜像的更新历史
++ Image Basis：容器运行的什么代码
++ 容器正在哪运行
++ Package Vulnerability：有没有已知的脆弱性？要不要施加相应的安全策略
+
+举例子：Here at **Shopify**, we use Grafeas as the central place to store all the metadata（500k+images） about our deploys, helping us build six thousand containers a day, and making our lives easier. 
+
+#### 4. 保护GKE网络 
+
+Google Kubernetes Engine
+
+**Restrict pod-to-pod traffic with a **[Kubernetes Network Policies](https://cloudplatform.googleblog.com/2018/03/Kubernetes-Engine-network-policy-is-now-generally-available.html) 
+
+In Kubernetes Engine, these are supported using the Calico Network Plugin, created in collaboration with [Tigera](https://www.tigera.io/) 
+
+#### 5. 啥来着
+
+#### 6. 云安全工具（5个来自合作伙伴）来检测和管理攻击
+
+针对的是运行时攻击
+
+创建行为baseline，比如用kprobes, tracepoints, and [eBPF](http://www.brendangregg.com/ebpf.html) kernel inspection 。偏离这个baseline的行为视为异常，可采取相应的措施：alert、隔离容器（放到一个新网络中或网络不可达)、停止容器、重启容器、杀死容器。
+
+分析安全事件：日志、snapshot等
+
+5个小伙伴：**Aqua Security, Capsule8, Stackrox, Sysdig Secure, and Twistlock** 
+
+#### 7.在不同的层级隔离容器
+
+使用hypervisor，g家对KVM进行了安全加固put [significant effort into ensuring its security](https://cloudplatform.googleblog.com/2017/01/7-ways-we-harden-our-KVM-hypervisor-at-Google-Cloud-security-in-plaintext.html) 
+
+trust boundary 就是你代码为此改变其信任级的地方
+
+container： k8s中容器并未完全网络隔离，和部分容器共享网络；也会受到邻居影响（比如某邻居没配cgroup)
+
+pod：网络隔离，使用了Network Policy；但也会受邻居影响；
+
+Node：k8s可以被授权只访问该node上的pod需要的资源，使用防火墙规则隔离网络
+
+Cluster：使用[per-cluster DNS](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/) 进行强网络隔离
+
+Project：GCP project，IAM
+
+Namespace: 提供RBAC控制，但是不要试图control resource quota, network, or policies 。它是帮你管理资源的，不是用来隔离的。
+
+![](./Isolation-provided-by-layer-of-Kubernetes.png)
+
+举了个例子：建一个多租户SaaS应用。
+
++ 避免邻居骚扰：在node层隔离关键workloads，部分坏了还能继续工作
++ 避免其它租户窃取你的信息：做好命名，组织对非授权node端口的访问(网络策略)，Cluster级
++ 关键数据：cluster级隔离
+
+
+
+## KataContainer 介绍
+
+[why-kata-containers-doesnt-replace-kubernetes](https://katacontainers.io/posts/why-kata-containers-doesnt-replace-kubernetes/)
+
+整合了 [Intel® Clear Containers](https://github.com/clearcontainers/runtime) and [Hyper runV](https://github.com/hyperhq/runv)  ，提供vm的安全和容器的速度
+
+#### CRI-O 与 Intel Clear Containers
+
+[使用CRI-O使K8S可以同时拥有两种runtime](https://medium.com/cri-o/intel-clear-containers-and-cri-o-70824fb51811)
+
++ 高性能VM是通过两种技术获得的： VT-x 和 [KSM](https://www.linux-kvm.org/page/KSM) 技术，还有一个优化了的mini-OS
+  + VT-x
+  + KSM： a memory-saving de-duplication feature，合并私有匿名页 for memory sharing and boot speed 
+  + mini-OS
++ Intel Clear Containers 的运行时叫做cc-runtime
+
+#### Docker 工作原理：
+
+```shell
+dockerd -> containerd -> containerd-shim -> runC
+        grpc         unix.Sock           OCI
+```
+
++ conainterd，相当于实际的daemon，监听Unix socket, 暴露 gRPC endpoints. 处理 low-level 容器管理任务、存储、镜像分发、网络attachment。**提供workload**
++ containerd-shim，最终形成的一个容器进程，它通过指定容器ID、boundle目录、运行时二进制(runC) 的api来创建容器，(runC创建完就exit了，非驻留进程），**提供了配置文件**
++ runC命令行工具端，根据OCI的标准来创建和运行容器。处理与linux底层交互，包括权能、cgroups、ns等
++ 总结：`runC(workload + 配置) => container-shim进程`
+
+#### kata融入Docker： [Docker’s runtime documentation](https://docs.docker.com/engine/reference/commandline/dockerd/#docker-runtime-execution-options)
+
++ 根据OCI标准，kata实现了替代runC的kata-runtime
++ `dockerd --add-runtime runc=runc --add-runtime custom=/usr/local/bin/kata-runtime`
++ ![](./dockerandkatacontainers.jpg)
+
+####kata融入K8S:
+
++ k8s引入了CRI，容器运行时接口。这里接口的是CRI-shim，比如dockershim
+  + cri-containerd
+  + cri-o 支持[多个运行](https://medium.com/cri-o/intel-clear-containers-and-cri-o-70824fb51811)时同时存在，这样一个node上可以运行vm容器和普通容器。通过pod的annotations可以让CRI-O知道是启动一个容器pod还是启动一个VM的pod
+  + frakti
++ kata为接入K8S，提供了两种方法：
+  + 实现了一个OCI标准的 kata-runtime，该runtime可以连向cri-containerd and CRI-O 
+  + 实现了一个硬件虚拟化运行时API，来让CRI-shims用，这是一种更加CRI-native的方法，frakti就是其中一种。
++ ![](./kubernetesandkatacontainers.jpg)
+
+
 
 
 
@@ -468,7 +662,7 @@ mount –t cgroup –o cpu,memory cpu_and_mem /sys/fs/cgroup/cg1
 
  
 
- 
+ ![kubernetes-pod-cheatsheet.png](./kubernetes-pod-cheatsheet.png)
 
  
 
