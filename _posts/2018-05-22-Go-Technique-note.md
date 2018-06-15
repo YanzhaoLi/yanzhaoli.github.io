@@ -5,14 +5,45 @@ categories: [Mastered]
 tags: Mastered
 ---
 
+
+
+# #
+
+类型转换，转换成你想要的类型，就能调用该类型上实现的方法了。否则，必须在该类型上实现该方法才能用
+
+```go
+type Sequence []int
+sort.IntSlice(s).Sort()
+#sort包中有一个类型叫IntSlice，其实就是type IntSlice []int, 将s类型转化为IntSlice，再调用Sort()方法
+```
+
+
+
+
+
 ### goroutine channel select wait
 
 1. goroutine 开销很小，类似栈分配的消耗。其实是一个用户态线程，go自己有个用户态调度器sched，维护一组gorouine让其在某个内核线程上跑，sched知道啥时候该让某个goroutine停换另一个跑。每个goroutine其实就是在heap上分配了一些空间模拟stack。每个内核线程会有一个上下文P，该上下文和shed一起管理一组goroutine，`runtime.GOMAXPROCS(x)`来设置有几个P，也就是有几个内核线程来跑该程序。
+
 2. chan 会立即阻塞，该goroutine内后面的代码不会执行，直到接收到，或者发送的东西被人接收到
 
    1. `[var] <- chan`  等待chan有值可以拿出来，这句话就可以执行了，比如另一个goroutine中执行了一句chan <- var
-3. select 会任意选择其中一个不被阻塞的case语句执行，一般配合for死循环执行
-4. goroutine、chan、sync.WaitGroup、select等是并行相关
+
+3. close()命令是通知所有等待的channel的，获得数据，但是需要给时间，不然有可能信号还没送到
+
+   ```go
+   stop := make(chan struct{})
+   go f1(stop)
+   go f2(stop)
+   close(stop)
+   time.Sleep(time.Second * 1)  //如果此时立刻结束主函数，那么两个routine可能收不到信号
+   ```
+
+   
+
+4. select 会任意选择其中一个不被阻塞的case语句执行，一般配合for死循环执行
+
+5. goroutine、chan、sync.WaitGroup、select等是并行相关
 
 ### struct 和 interface
 
@@ -42,20 +73,18 @@ tags: Mastered
 
       2. 最后一句s.Run（）是可以执行的
 
-2. 一个**struct中可以包含interface类型对象**，那么该结构体可以直接使用该类型对象的方法？不是！但是可以把该struct赋值给某个接口，这个接口就可以使用这个方法了。
+2. 一个**struct中可以包含interface类型对象**，那么该结构体可以直接使用该类型对象的方法？不是！要么有一个interface实体放到struct中，要么struct自己实现该interface的方法。
 
 3. we can define a method for any **named** type except pointers and interfaces 可以在除了指针和接口外的任何类型（named表示type过的）上定义方法（可以是普通方法，也可以是接口的方法）；**函数**也可以拥有方法
 
-   1. ```go
-      // The HandlerFunc type is an adapter to allow the use of
-      // ordinary functions as HTTP handlers.  If f is a function
-      // with the appropriate signature, HandlerFunc(f) is a
-      // Handler object that calls f.
+   1. http.Handle(路径, handler); //handler是一个实现了Handler接口的ServeHTTP()方法的实体
+
+   2. ```go
+      // The HandlerFunc type is an adapter to allow the use of ordinary functions as HTTP handlers.  If f is a function with the appropriate signature, HandlerFunc(f) is a Handler object that calls f.
       type HandlerFunc func(ResponseWriter, *Request)
       func (f HandlerFunc) ServeHTTP(w ResponseWriter, req *Request) {
           f(w, req)  //起了回调函数的作用，不用单独定义一个chan来调用函数了
       }
-      
       func ArgServer(w http.ResponseWriter, req *http.Request) {
           fmt.Fprintln(w, os.Args)
       }
@@ -63,7 +92,6 @@ tags: Mastered
       http.Handle("/args", http.HandlerFunc(ArgServer))
       //这里的http.HandlerFunc()是执行的类型转换，因为ArgServer函数与HandlerFunc类型有相同的signature
       ```
-      
 
 4. 结构体实现的方法可以在结构体+指针上调用。但指针实现的接口，只能是指针赋值给接口。 
 
@@ -91,7 +119,7 @@ tags: Mastered
       1. 在源码中可以发现确实覆盖了Configurator的Create()函数，默认configFactory的Create函数实现是f.CreateFromProvider(DefaultProvider)
       2. 覆盖后是sc.Configurator.CreateFromProvider(sc.algorithmProvider)
 
-   3. 接口可以赋值给结构体么？？？即能恢复成原来的struct么？
+   3. 接口可以赋值给结构体么？？？即能恢复成原来的struct么？ 表示不能，而且基本不会定义接口对应的变量
 
 6. **匿名的fields可以实现其它语言中继承的功能** 
 
@@ -116,7 +144,7 @@ tags: Mastered
       )
       ```
 
-3. rune是处理utf-8，比如汉字，相关的内容what23
+3. rune是处理utf-8，比如汉字，相关的内容what23，rune("s") 返回的是ascii码数值，如果是汉子，就是utf-8
 
 4. import "log"  两种用法
 
@@ -135,7 +163,7 @@ tags: Mastered
 
 3. 传递同类型未知个数参数使用  `varname ...Type`，函数内部转化为[]int{}，即slice
 
-4. 传递不同类型的未知个数参数呢？使用空接口interface{}
+4. 传递不同类型的未知个数参数呢？使用空接口interface{}。尽量别这么用哈
 
    1. ```go
       func PrintType(variables ...interface{}) {
@@ -210,16 +238,49 @@ tags: Mastered
 
   + [Delve](https://github.com/derekparker/delve)
 
-
-
-
-### Go sync 包
+#### import "sync"
 
 除了sync.Once和sync.WaitGroup类型外，其它类型大多用于low-level library routines，high-level的同步工作请使用channels和communication
 
+#### import “container/heap"
+
+heap.Init(h)
+
+heap.Push(h, 3)
+
+heap.Pop()
 
 
 
+
+
+#### golang 反射的应用
+
+http://licyhust.com/golang/2017/10/30/golang-reflect/    + [官网](https://golang.org/pkg/reflect/)
+
+两大类型Value和Type + interface{}桥梁 => 三大定律
+
+- 反射可以将“接口类型变量”转换为“反射类型对象”
+- 反射可以将“反射类型对象”转换为“接口类型变量”。
+- 如果要修改“反射类型对象”，其值必须是“可写的”（settable）
+
+用于操作任意类型对象
+
+- 修改结构体信息
+- 获取结构信息
+
+```go
+func reflect.TypeOf(i interface{}) reflect.Type
+# 返回的是一个接口，该接口代表了i的动态类型
+func reflect.ValueOf(i interface{}) reflect.Value
+# 返回的是一个结构体，代表了i的动态值
+```
+
+reflect包中有以Type和Value作参数的函数，最重要的是就是上面的TypeOf和ValueOf
+
+reflect.Type 接口内有很多方法，接口对应的动态类型必须实现了这些方法
+
+reflect.Value上也定义了一些方法
 
 ## To Read => Summary
 

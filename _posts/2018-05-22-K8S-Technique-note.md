@@ -155,7 +155,7 @@ default在大生产系统中不建议使用，最好创建几个ns，来管理�
 
 首先，container runtime先创建一个网络命名空间`ip netns add NAME`
 
-接着，调用插件，讲该网络命名空间接入网络：
+接着，调用插件，将该网络命名空间接入网络：
 
 + 准备环境变量: plugin路径、使用的命令，哪个容器（就是netns）等
 + 准备配置文件：指定使用什么插件如bridge， 以stdin的方式给插件
@@ -548,7 +548,29 @@ dockerd -> containerd -> containerd-shim -> runC
 
 
 
+## 使用SharedInformer自己实现一个Kube Controller
 
+https://engineering.bitnami.com/articles/kubewatch-an-example-of-kubernetes-custom-controller.html
+
++ 一个controller负责一种资源
++ 两个组件，一个Informer/SharedInformer监控某对象的事件，把事件交给另一个组件Workqueue
++ 不可能不停地给apiserver要信息吧，而且控制器也只是要变化事件，那就维护一个本地cache吧client-go做这件事，提供ListWatcher接口：初始list + watch某资源。Informer这个结构就做了这件事
+
+Informer：接口， 展示+监控+提供处理钩子。三大件如下
+
+1. `ListWatcher`结构，包含listFunc和watchFunc函数，负责展示和监控某***ns***下的*某**标签***的某***<u>资源</u>***
+2. `ResourceEventHandlerFuncs struct`，包含AddFunc、UpdateFunc、DeleteFunc, 负责接收到事件后的处理。Informer 并不知道各个controller什么状态了，所以ResourceEventHandlers只是简单地把事件放到各自的待处理队列中了Workqueue
+3. `ResyncPeriod`: 除被动监听外，控制器还可以主动sync，执行UpdateFunc，该值就是主动更新周期时间
+
+SharedInformer：接口， 基本都是用这个
+
+1. Informer是某控制器自己用，但是有很多controller啊，请求的东西有可能重叠，所以弄了个共享Informer
+2. 跟Informer一样，也是三大件
+
+Workqueue：
+
++ *client-go/util/workqueue* 
++ 以map的key的形式存notification，而且是等缓存同步之后再处理。
 
 ## Linux Namespace
 
