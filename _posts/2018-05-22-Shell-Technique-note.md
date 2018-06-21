@@ -74,6 +74,16 @@ if [[ $string =~ $extend_epr ]]; then
 
 
 
+awk 处理从第x次出现，到第x+N次出现之间的内容
+
+`awk -v start=3 'pattern{n++; next}; n==start{do something}; n==start+N{exit}' file`
+
+diff 不使用文件比较，在sh -c 不能用，system()
+
+`diff <(echo $v1) <(echo $v2)`  
+
+
+
 ### [awk](http://www.grymoire.com/Unix/AwkRef.html) [-arg] 'PATTERN{ACTION}'
 
 ```shell
