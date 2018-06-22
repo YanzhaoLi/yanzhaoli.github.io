@@ -51,6 +51,10 @@ k8s使用的是3.0版本的etcd，于是，
 
 flannel kube-proxy 等用到的参数不少都是通过configmap挂载过去的data
 
+#### 如何使用audit2rbac来生成合适的RBAC策略
+
+该项目灵感必然来源于selinux的策略生成方法    https://github.com/liggitt/audit2rbac
+
 
 
 ### 暴露给cluster外访问
@@ -683,6 +687,13 @@ mount –t cgroup –o cpu,memory cpu_and_mem /sys/fs/cgroup/cg1
  
 
  
+
+# ToRead
+
+1. [K8S十大使用技巧](https://mp.weixin.qq.com/s/YnnhRh9HV20gbd5hBBLNig)
+2. [KubeCon 2018视频资源](https://github.com/cncf/presentations/blob/master/chinese/2018Copenhagen.md)
+
+
 
  ![kubernetes-pod-cheatsheet.png](./kubernetes-pod-cheatsheet.png)
 
