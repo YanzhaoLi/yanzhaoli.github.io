@@ -234,9 +234,21 @@ sort.IntSlice(s).Sort()
   cd ~/.vim/bundle/  && git clone https://github.com/fatih/vim-go.git  
   ```
 
-+ 调试工具：
++ 调试工具Delve：
 
-  + [Delve](https://github.com/derekparker/delve)
+  + git clone https://github.com/go-delve/delve.git
+  + go get -v github.com/go-delve/delve/cmd/dlv
+    + git clone之后，其路径需要与go get的路径一致
+
++ vscode go
+
+  + 打开一个文件夹，创建一个.go文件，会自动提示你安装vscode go插件
+    + mkdir $GOPATH/src/golang.org/x  && cd $GOPATH/src/golang.org/x
+    + git clone https://github.com/golang/tools.git tools
+    + go get -v github.com/sqs/goreturns
+  + Run Build Task 会提示你创建task.json，把command改成go run即可
+  + Start Debugging 应该是可以直接使用的
+
 
 #### import "sync"
 
