@@ -7,6 +7,9 @@ tags: Mastered
 
 
 
+## Cluster-api
+![](./ClusterAPI-VsphereProvider.png)
+
 ## Install 
 
 如何检查系统是否满足安装需求
